@@ -1,5 +1,7 @@
 from pytube import YouTube
 from pytube import Search
+from pytube import Playlist
+from pytube import Channel
 import ffmpeg
 import json
 import codecs
@@ -9,11 +11,14 @@ import sys
 import os
 
 
-link = 'https://youtu.be/rYS8edMRgBg'
+link = 'https://youtu.be/WtK5SQyfaJk'
 itag = 18  # номер потока, 137 с разрешением 1080p, 22 - 720p, 43 или 18 - 360p
 myFps = 1 / 15  # каждые 15 секунд
-mySearch = 'Squarepusher'
+mySearch = 'альманах вокруг света'
 allResults = []
+yt = YouTube(link)
+
+
 
 
 def searchVideo(mySearch):
@@ -33,28 +38,31 @@ def resultsSearch(allResults):
         print('========================================================================')
 
 
-def descVideo(link):
-    video_info = {}
-    yt = YouTube(link)
-    # yt.bypass_age_gate()
-    # print(yt.vid_info)
-    video_info['link'] = link
-    video_info['title'] = yt.title
-    video_info['description'] = yt.description
-    video_info['keywords'] = yt.keywords
-    video_info['thumbnail_url'] = yt.thumbnail_url
-    video_info['length'] = yt.length
-    video_info['channel_url'] = yt.channel_url
-    video_info['author'] = yt.author
-    video_info['age_restricted'] = yt.age_restricted
-    # video_info['streams'] = str(yt.streams)
-    # print(yt.streams.filter(progressive=True)[0])
-    print(f'Продолжительность - {yt.length // 60 // 60}:{yt.length // 60 % 60}:{yt.length % 60}')
-    # yt.bypass_age_gate()
-    # with open('1.json', 'w', encoding='utf-8', ) as outfile:
-    #     json.dump(video_info, outfile)
-    with codecs.open('1.json', 'w', encoding='utf-8') as fout:
-        json.dump(video_info, fout, ensure_ascii=False)
+def descVideo(result):
+    video_info_all = []
+
+    for i in allResults:
+        video_info = {}
+        yt = YouTube(i)
+        # yt.bypass_age_gate()
+        # print(yt.vid_info)
+        video_info['link'] = i
+        video_info['title'] = yt.title
+        video_info['description'] = yt.description
+        video_info['keywords'] = yt.keywords
+        video_info['thumbnail_url'] = yt.thumbnail_url
+        video_info['length'] = yt.length
+        video_info['channel_url'] = yt.channel_url
+        video_info['author'] = yt.author
+        video_info['age_restricted'] = yt.age_restricted
+        video_info['fmt_streams'] = yt.fmt_streams
+        # video_info['streams'] = str(yt.streams)
+        # print(yt.streams.filter(progressive=True)[0])
+        print(f'Продолжительность - {yt.length // 60 // 60}:{yt.length // 60 % 60}:{yt.length % 60}')
+        video_info_all.append(video_info)
+
+        with codecs.open('1.json', 'w', encoding='utf-8') as f:
+            json.dump(video_info_all, f, indent=4, ensure_ascii=False)
 
 
 def makeFrames(link, itag, myFps):
@@ -67,19 +75,43 @@ def makeFrames(link, itag, myFps):
 
     # url = '1.mp4'
     # print(url)
-    (ffmpeg
-        .input(url)
-        # .trim(start_frame=10, end_frame=200)
-        .filter('fps', fps=myFps)
-        # .filter('scale', 1512, -1, flags='lanczos')
-        # .filter('select', 'eq(pict_type,I)')
-        # .filter('select', 'not(mod(n,100))')
-        # .filter('scale', 200, 100)
-        # .filter('tile', 8, 6)
-        .output('out/keyframe-%02d.png', vsync=2, format='image2')
-        # .output('out/key.png',)
-        .run(overwrite_output=True)
-     )
+    yt = YouTube(link)
+    duration = yt.length
+    myFps = 15
+    ss, mm, hh = 0, 0, 0
+    for i in range(0, duration, myFps):
+        ss += myFps
+        if ss >= 60:
+            mm += 1
+            ss = 0
+            if mm >= 60:
+                hh += 1
+                mm = 0
+
+        s = str(str(hh) + ':' + str(mm) + ':' + str(ss))
+        print(s)
+
+        out = 'out/keyframe-' + str(i) + '.png'
+
+        (ffmpeg
+            .input(url)
+            .output(out, vframes=1, ss=s)
+            .run(overwrite_output=True)
+         )
+
+    # (ffmpeg
+    #     .input(url)
+    #     # .trim(start_frame=10, end_frame=200)
+    #     # .filter('fps', fps=myFps)
+    #     # .filter('scale', 1512, -1, flags='lanczos')
+    #     # .filter('select', 'eq(pict_type,I)')
+    #     # .filter('select', 'not(mod(n,100))')
+    #     # .filter('scale', 200, 100)
+    #     # .filter('tile', 8, 6)
+    #     # .output('out/keyframe-%02d.png', vsync=2, format='image2')
+    #     .output('out/keyframe.png', vframes=1, ss=s)
+    #     .run(overwrite_output=True)
+    #  )
     # scale = 200:120, tile = 8x6 -frames: v 1
     # ss = '00:00:00'
     # t = '00:00:10'
@@ -104,15 +136,15 @@ def downloadVideo(link):
     audio_best.download()
 
 
-descVideo(link)
+# descVideo(link)
 
-# makeFrames(link, itag, myFps)
+makeFrames(link, itag, myFps)
 
 # searchVideo(mySearch)
 # resultsSearch(allResults)
 
 # downloadVideo(link)
-
+# descVideo(link)
 
 
 #  ffmpeg -i 1.mp4 -vf select='eq(pict_type\,I)' -vsync 2 -f image2 out/keyframe-%02d.png
@@ -120,3 +152,4 @@ descVideo(link)
 # ffprobe -v quiet -print_format json -show_format -show_streams 1.mp4 > 1.json
 # ffmpeg -i 1.mp4 -ss 00:00:00 -vframes 1 output.png
 # ffmpeg -i 1.mp4 -vf select='gt(scene\,0.2)',scale=200:120,tile=8x6 -frames:v 1 preview.png
+# к ссылке добавляем в секундах:   ?t=1430
