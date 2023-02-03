@@ -1,0 +1,37 @@
+[
+    {
+        "link": "https://youtu.be/grMPi9PTCaA",
+        "title": "Jennifer Connelly -  No Vacation",
+        "description": "14 year old Jennifer Connelly in a Horror film 'Phenomena' - (1985)\nMusic: Yam Yam - No Vacation\nFilm: Phenomena (1985)",
+        "keywords": [],
+        "thumbnail_url": "https://i.ytimg.com/vi/grMPi9PTCaA/sddefault.jpg",
+        "length": 219,
+        "channel_url": "https://www.youtube.com/channel/UCZd_rSDwgiTFXLn0mC5zfFQ",
+        "author": "no milk in my veins",
+        "age_restricted": false,
+        "video_id": "grMPi9PTCaA"
+    },
+    {
+        "link": "https://youtu.be/mSbyhHfxs04",
+        "title": "Урок 10. JavaScript. Proxy. Примеры. Часть 2",
+        "description": "Получить профессию Frontend разработчика - \nhttps://bit.ly/3y15SiJ\n\nПодробнее узнать об обучении в Result School - \nhttps://bit.ly/3ymhiic \n\nБесплатный курс HTML & CSS - https://bit.ly/3ypNAsU \nСделать 5 проектов на JavaScript - https://bit.ly/3u4ODvJ \n\nЯ в соц сетях:\nTelegram: https://t.me/js_by_vladilen\nVK: https://vk.com/vladilen.minin\nInstagram: https://instagram.com/vladilen.minin\n\nМои паблики по JavaScript:\nTelegram: https://t.me/result_school_it\nVK: https://vk.com/result.school\nInstagram: https://www.instagram.com/result.scho...\n\nJavaScript cообщества:\nDiscord: https://discord.gg/jscommunity\nTelegram: https://t.me/js_by_vladilen_chat\n\nRoadmap по каналу:\nhttps://vladilen.notion.site/Roadmap-YouTube-0b917095c1ec424e9574c2ede36efab9\n\nУрок 10. JavaScript. Proxy. Примеры. Часть 2\nВ ролике я покажу 3 практических примера с классом Proxy\nБудет создана функция задающая значение по умолчанию\nФункция создающая приватные поля в объекте\nРасширение функционала массивов для оптимизации поиска\n\nИсходники к видео:\nhttps://github.com/vladilenm/proxy-examples\n\nСложный JavaScript простым языком:\nhttps://www.youtube.com/watch?v=aQkgUUmUJy4&list=PLqKQF2ojwm3l4oPjsB9chrJmlhZ-zOzWT",
+        "keywords": [
+            "js",
+            "javascript",
+            "владилен",
+            "владилен минин",
+            "урок js",
+            "урок javascript",
+            "proxy",
+            "js proxy",
+            "javascript прокси",
+            "прокси"
+        ],
+        "thumbnail_url": "https://i.ytimg.com/vi/mSbyhHfxs04/sddefault.jpg",
+        "length": 1526,
+        "channel_url": "https://www.youtube.com/channel/UCg8ss4xW9jASrqWGP30jXiw",
+        "author": "Владилен Минин",
+        "age_restricted": false,
+        "video_id": "mSbyhHfxs04"
+    }
+]

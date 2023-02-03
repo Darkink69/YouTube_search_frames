@@ -1,0 +1,9 @@
+<h1>{{title}}</h1>
+{{#if emailVisible}}
+    <p>Электронный адрес:</p>
+    {{#each email}}
+        <li>{{this}}</li>
+    {{/each}}
+{{/if}}
+
+<p>Телефон: {{phone}}</p>

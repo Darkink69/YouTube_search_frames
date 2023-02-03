@@ -1,0 +1,112 @@
+{{!-- {{#if isHome}}
+    <a href="/about">На эбаут</a>
+{{/if}} --}}
+<form action="/" method="POST">
+    <div class="input-field col s6">
+      <input value="https://youtu.be/" id="url" name="url" type="text" class="validate" required>
+      <label class="active" for="first_name2">Введите ссылку вида https://youtu.be/grMPi9PTCaA</label>
+      <span class="helper-text" data-error="Нужна ссылка"></span>
+
+    </div>
+    <button class="btn btn-primary">Добавить</button>
+</form>
+
+<h2>{{ lead }}</h2>
+{{!-- {{#if isWait}}
+    <div class="progress">
+        <div class="indeterminate"></div>
+    </div> 
+{{/if}}   --}}
+{{#if urls.length}}
+{{#each urls}}
+    <div class="row">
+    <div class="col s12 m7">
+      <div class="card">
+        <div class="card-image">
+            {{#if thumbnail_url}}
+              <a href={{url}} target="_blank"><img src={{thumbnail_url}} alt="" class="preview"></a>
+
+            {{/if}}  
+            <h4 class="title">{{title}}</h4>
+            {{!-- <p class="disc">{{description}}</p> --}}
+            <p class="disc">{{length}} секунд</p>
+            <a href={{channel_url}} target="_blank"><p class="disc">{{author}}</p></a>
+            {{#if screenlist_url}}
+              <a href={{screenlist_url}} target="_blank"><img src={{screenlist_url}} alt="" class="preview"></a>
+
+            {{/if}}
+        <a href={{screenlist_url_small}} target="_blank"><img src={{screenlist_url_small}} alt="" class="preview"></a>
+        {{!-- <video src="{{url_video}}" autoplay controls id='myVideo'> !!!!</video> --}}
+          
+        <div class="card-action">
+          {{#if screenlist_url}}
+            {{!-- <a href="/{{id}}">Не нажимать!</a>             --}}
+          {{else}}
+              <a href="/{{id}}/edit?allow=true" method="post">Скринлист</a>
+          {{/if}}
+
+
+          {{#if frame.length}}
+            <a href="/{{id}}" method="post">Комикс</a>
+          {{else}}
+            <a href="/{{id}}/comix?allow=true" method="post">Создать комикс</a>
+            
+          {{/if}}  
+
+
+
+
+          <a class="waves-effect waves-light btn-small red" href="/{{id}}/del?allow=true" method="post">Удалить</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/each}}
+{{else}}
+<p>Добавьте видео</p>
+{{/if}}
+<div class="container">
+
+
+</div>
+{{!-- <script src="script.js"></script> --}}
+<script>
+
+  const btns = document.querySelectorAll('.btn')
+  btns[0].addEventListener('click', () => {
+    let div = document.createElement('div');
+    div.classList = "preview"
+    div.innerHTML = `
+      <p>Идет сбор информации о видео, минуточку...</p>
+      <div class="preloader-wrapper small active">
+        <div class="spinner-layer spinner-red-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>         
+      `;
+    document.querySelector('.helper-text').append(div);
+    {{!-- document.querySelector('.btn').remove() --}}
+  })
+
+  const btnsItem = document.querySelectorAll('.card-action')
+    {{!-- console.log(btnsItem) --}}
+    btnsItem[0].addEventListener('click', () => {
+    let div = document.createElement('div');
+    div.classList = "preview"
+    div.innerHTML = `
+        <p>Идет обработка видео. Не закрывайте страницу.</p>
+        <div class="progress">
+            <div class="indeterminate"></div>
+        </div>       
+      `;
+    document.querySelector('.card-action').prepend(div);
+  })
+
+</script>
+

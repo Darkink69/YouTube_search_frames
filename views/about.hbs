@@ -1,0 +1,122 @@
+<a href="/">Назад</a>
+<h3>{{ lead }}</h3>
+    <div class="container">
+        <h4 id="{{url_video}}">{{title}}</h4>
+       {{!-- {{#each startSec}} 
+        <p>{{i_frame_seconds}}</p>
+       {{/each}} --}}
+        {{#each data_frame}}
+          <p>{{data_frame}}</p>
+        {{/each}}
+        
+        <div class="grid">
+            {{#each frames}}
+            
+              {{!-- <div><a href={{frame}} target="_blank"><img src={{frame}} alt="fra"></a></div> --}}
+              <div><img src={{frame}} target="_blank" alt='{{i_frame_seconds}}'></a></div>
+
+              {{!-- <a href={{screenlist_url}} target="_blank"><img src={{screenlist_url}} alt="" class="preview"></a> --}}
+            {{/each}}
+        </div>
+             
+
+    </div>
+
+
+<style type="text/css">
+
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      
+    } 
+
+    .grid > * {
+      background-color: #ffbf94;
+    }
+
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      cursor: pointer;
+
+    }
+
+    .preview {
+      position: fixed;
+      left: 0px;
+      top: 100px;
+      width: 400px;
+      height: auto;
+      z-index:999;         
+    }
+
+    .black {
+      position: fixed;
+      top: 0px;
+      width: 100vw;
+      height: 100vh;
+      background-color: black;
+      opacity: 75%;
+      z-index:-999
+
+    }  
+
+
+
+</style>
+
+
+<script>
+    const frames = document.querySelectorAll('.grid')
+    const id = document.querySelector('h4')
+    {{!-- console.log(id) --}}
+    {{!-- console.log(frames[0].childNodes[0].parentElement.style) --}}
+
+    frames[0].addEventListener('click', e => {
+
+      const curImg = e.target.src
+      const startSec = 75
+      let div = document.createElement('div');
+      div.classList = "preview"
+      div.innerHTML = `
+          
+          <a href=${curImg}><img src=${curImg} alt="frame"></a>
+          <video src="${id.id}" autoplay controls id='myVideo'> !!!!</video>
+          <div class='black'></div>
+          `;
+      document.querySelector('.container').append(div);
+
+
+      document.querySelector('.preview').onclick = () => {
+          document.querySelector('.preview').remove();
+      }
+      
+      const vid = document.getElementById("myVideo");
+
+      function getCurTime() { 
+          alert(vid.currentTime);
+      } 
+
+      function setCurTime() { 
+          vid.currentTime = 90;
+      } 
+
+      setCurTime()
+
+      
+      {{!-- console.log(e.target) --}}
+    })
+
+
+
+    window.onkeydown = function(event) {
+        if (event.keyCode == 27) {
+            document.querySelector('.preview').remove();
+        }
+    };
+
+
+</script>

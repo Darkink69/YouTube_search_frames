@@ -1,0 +1,13 @@
+<h2>Редактируем</h2>
+
+<form action="/" method="POST">
+    <div class="input-field col s6">
+      <input value="youtu.be/grMPi9PTCaA" id="url" name="url" type="text" class="validate" required value="{{url.id}}">
+      <label class="active" for="first_name2">Введите ссылку</label>
+      <span class="helper-text" data-error="Нужна ссылка"></span>
+
+    </div>
+    <input type="hidden" name="id" value="{{urls.id}}">
+
+    <button class="btn btn-primary">Изменить</button>
+</form>
